@@ -3,37 +3,56 @@ import { useState } from "react";
 import StudentView from "./StudentView";
 import RecruiterView from "./RecruiterView";
 
+const C = {
+  bg: "#0a0c12",
+  surface: "#0f1117",
+  border: "rgba(255,255,255,0.07)",
+  text: "#e2e8f0",
+  muted: "#64748b",
+  accent: "#6366f1",
+  accentMuted: "rgba(99,102,241,0.12)",
+  green: "#10b981",
+};
+
 export default function CareerMate() {
   const [view, setView] = useState("student");
   return (
-    <div style={{ minHeight: "100vh", background: "#080b14", fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif", color: "#f1f5f9" }}>
-      <div style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)", backdropFilter: "blur(12px)", position: "sticky", top: 0, zIndex: 10 }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", color: C.text }}>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } } * { box-sizing: border-box; }`}</style>
+      <nav style={{ borderBottom: `1px solid ${C.border}`, background: "rgba(10,12,18,0.9)", backdropFilter: "blur(16px)", position: "sticky", top: 0, zIndex: 10 }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 34, height: 34, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>🎯</div>
-            <span style={{ fontSize: 18, fontWeight: 800, background: "linear-gradient(135deg,#818cf8,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>CareerMate</span>
-            <span style={{ fontSize: 11, color: "#6366f1", fontWeight: 600, background: "rgba(99,102,241,0.15)", border: "1px solid rgba(99,102,241,0.3)", borderRadius: 4, padding: "1px 6px" }}>AI</span>
+            <div style={{ width: 28, height: 28, background: C.accent, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <span style={{ fontSize: 16, fontWeight: 800, color: C.text, letterSpacing: "-0.01em" }}>CareerMate</span>
+            <span style={{ fontSize: 10, color: C.accent, fontWeight: 700, background: C.accentMuted, border: `1px solid ${C.accent}30`, borderRadius: 4, padding: "1px 6px", letterSpacing: "0.06em" }}>AI</span>
           </div>
-          <div style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 4, display: "flex", gap: 4 }}>
-            {[["student", "🎓 Student"], ["recruiter", "💼 Recruiter"]].map(([id, label]) => (
-              <button key={id} onClick={() => setView(id)} style={{ background: view === id ? (id === "student" ? "linear-gradient(135deg,#6366f1,#8b5cf6)" : "linear-gradient(135deg,#059669,#10b981)") : "transparent", color: view === id ? "white" : "#888", border: "none", borderRadius: 9, padding: "8px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }}>
+          <div style={{ display: "flex", background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 9, padding: 3, gap: 3 }}>
+            {[["student", "Candidate"], ["recruiter", "Recruiter"]].map(([id, label]) => (
+              <button key={id} onClick={() => setView(id)}
+                style={{ background: view === id ? (id === "student" ? C.accent : C.green) : "transparent", color: view === id ? "white" : C.muted, border: "none", borderRadius: 7, padding: "6px 16px", fontSize: 12.5, fontWeight: 600, cursor: "pointer", transition: "all 0.2s" }}>
                 {label}
               </button>
             ))}
           </div>
         </div>
-      </div>
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px 0" }}>
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
-          {view === "student"
-            ? <><h1 style={{ fontSize: 34, fontWeight: 900, margin: "0 0 10px", background: "linear-gradient(135deg,#c7d2fe,#a78bfa,#818cf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Land Your Dream Job</h1><p style={{ color: "#64748b", fontSize: 15 }}>Upload resume · paste job description · get match score, analysis & tailored outreach</p></>
-            : <><h1 style={{ fontSize: 34, fontWeight: 900, margin: "0 0 10px", background: "linear-gradient(135deg,#6ee7b7,#34d399,#10b981)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Find the Right Talent</h1><p style={{ color: "#64748b", fontSize: 15 }}>Upload candidate resume · run ATS analysis · instantly know if they're a fit</p></>
-          }
+      </nav>
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "36px 24px 28px" }}>
+        <div style={{ marginBottom: 32 }}>
+          <h1 style={{ fontSize: 28, fontWeight: 800, color: C.text, margin: "0 0 8px", letterSpacing: "-0.02em" }}>
+            {view === "student" ? "Resume Match Analysis" : "Candidate Evaluation"}
+          </h1>
+          <p style={{ color: C.muted, fontSize: 14, margin: 0 }}>
+            {view === "student"
+              ? "Upload your resume and paste a job description to get a match score and generate tailored outreach."
+              : "Upload a candidate resume and paste your job description to run an ATS evaluation."}
+          </p>
         </div>
         {view === "student" ? <StudentView key="student" /> : <RecruiterView key="recruiter" />}
       </div>
-      <div style={{ textAlign: "center", padding: "40px 24px 24px", color: "#2d3748", fontSize: 12 }}>
-        Powered by Claude AI · CareerMate © 2026
+      <div style={{ textAlign: "center", padding: "32px 24px", borderTop: `1px solid ${C.border}`, color: C.muted, fontSize: 12 }}>
+        CareerMate AI — Built by Tanvi Kadam · Powered by Claude
       </div>
     </div>
   );
